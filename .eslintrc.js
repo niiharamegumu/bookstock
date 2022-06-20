@@ -21,4 +21,4 @@ module.exports = {
       version: '18.1.0',
     },
   },
-};
+}
