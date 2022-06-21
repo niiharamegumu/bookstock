@@ -31,7 +31,7 @@ const login = ({
                       className="group relative inline-flex items-center justify-start overflow-hidden rounded bg-white px-6 py-3 font-medium transition-all hover:bg-white"
                       onClick={() =>
                         signIn(provider.id, {
-                          callbackUrl: '/',
+                          callbackUrl: '/articles',
                         })
                       }
                     >
