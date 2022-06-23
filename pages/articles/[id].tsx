@@ -15,7 +15,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     res.statusCode = 403
     return { props: { article: null } }
   }
-  const article = await prisma.article.findUnique({
+  const data = await prisma.article.findUnique({
     where: {
       id: Number(params?.id),
     },
@@ -23,10 +23,11 @@ export const getServerSideProps: GetServerSideProps = async ({
       users: true,
     },
   })
-  if (!article) {
+  if (!data) {
     res.statusCode = 404
     return { props: { article: null } }
   }
+  const article = JSON.parse(JSON.stringify(data))
   const isBookmarked = article.users.some(
     (user: User) => user.email === session.user?.email
   )
