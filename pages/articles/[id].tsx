@@ -41,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 type Props = {
   article: ArticleType & { users: User[] }
-  isBookmarked?: Boolean
+  isBookmarked: Boolean
 }
 
 const Article: FC<Props> = (props) => {
