@@ -1,10 +1,10 @@
 import { Article as ArticleType, User } from '@prisma/client'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
-import Router from 'next/router'
 import { FC } from 'react'
 
 import prisma from '../../lib/prisma'
+import { changeBookmark } from '../../utils/functions'
 
 export const getServerSideProps: GetServerSideProps = async ({
   req,
@@ -54,19 +54,6 @@ const Article: FC<Props> = (props) => {
         <p>Not Found...</p>
       </div>
     )
-  }
-
-  async function changeBookmark(
-    id: number,
-    type: 'add' | 'remove'
-  ): Promise<void> {
-    await fetch(
-      process.env.NEXT_PUBLIC_VERCEL_URL + `/api/bookmark/${type}/${id}`,
-      {
-        method: 'PUT',
-      }
-    )
-    Router.push(`/articles/${id}`)
   }
 
   return (
