@@ -27,7 +27,9 @@ export const getServerSideProps: GetServerSideProps = async ({
     res.statusCode = 404
     return { props: { article: null } }
   }
-  const article = JSON.parse(JSON.stringify(data))
+  const article: ArticleType & { users: User[] } = JSON.parse(
+    JSON.stringify(data)
+  )
   const isBookmarked = article.users.some(
     (user: User) => user.email === session.user?.email
   )
