@@ -1,6 +1,7 @@
 import { Article as ArticleType, User } from '@prisma/client'
 import { GetServerSideProps } from 'next'
 import { getSession } from 'next-auth/react'
+import Router from 'next/router'
 import { FC } from 'react'
 
 import prisma from '../../lib/prisma'
@@ -54,6 +55,20 @@ const Article: FC<Props> = (props) => {
       </div>
     )
   }
+
+  async function changeBookmark(
+    id: number,
+    type: 'add' | 'remove'
+  ): Promise<void> {
+    await fetch(
+      process.env.NEXT_PUBLIC_VERCEL_URL + `/api/bookmark/${type}/${id}`,
+      {
+        method: 'PUT',
+      }
+    )
+    Router.push(`/articles/${id}`)
+  }
+
   return (
     <div className="container mx-auto">
       <div className="my-12 flex justify-center p-12">
@@ -65,6 +80,7 @@ const Article: FC<Props> = (props) => {
           </p>
           {isBookmarked ? (
             <button
+              onClick={() => changeBookmark(props.article.id, 'remove')}
               type="button"
               className="mt-5 inline-flex items-center rounded-lg bg-red-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
             >
@@ -75,6 +91,7 @@ const Article: FC<Props> = (props) => {
             </button>
           ) : (
             <button
+              onClick={() => changeBookmark(props.article.id, 'add')}
               type="button"
               className="mt-5 inline-flex items-center rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
